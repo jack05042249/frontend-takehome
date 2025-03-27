@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 import { GetContinentsData } from "../../types/types";
 import "./RegionChart.css";
@@ -17,6 +17,8 @@ const GET_CONTINENTS = gql`
   }
 `;
 
+
+
 interface RegionChartProps {
   onRegionClick: (continent: string | null) => void;
   selectedContinent: string | null;
@@ -31,6 +33,22 @@ interface RegionChartProps {
  */
 export const RegionChart: React.FC<RegionChartProps> = ({ onRegionClick, selectedContinent }) => {
   const { loading, error, data } = useQuery<GetContinentsData>(GET_CONTINENTS);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  useEffect(() => {
+    // Step 2: Define the event listener function
+    const handleResize = () => {
+      // Update the window width state when window resizes
+      setWindowWidth(document.getElementById('region-chart')?.clientWidth ?? 0);
+    };
+
+    // Step 3: Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Step 4: Cleanup event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const continents = useMemo(() => {
     if (!data) return [];
@@ -53,7 +71,7 @@ export const RegionChart: React.FC<RegionChartProps> = ({ onRegionClick, selecte
   if (error) return <p>Error loading data.</p>;
 
   return (
-    <div className="region-chart">
+    <div className="region-chart" id="region-chart">
       <div className="chart-title">Languages Spoken by Continent</div>
       <svg width="100%" height={continents.length * 40 + 20} className="chart-container">
         {continents.map((continent, index) => (
@@ -61,14 +79,14 @@ export const RegionChart: React.FC<RegionChartProps> = ({ onRegionClick, selecte
             <rect
               x={0}
               y={index * 40}
-              width={continent.languageCount * 10}
+              width={continent.languageCount * (windowWidth - 50) / 100}
               height={30}
               fill={selectedContinent === continent.name ? "#007bff" : "#999"}
             />
             <text x={5} y={index * 40 + 20} fill="white" fontSize="14px">
               {continent.name}
             </text>
-            <text x={continent.languageCount * 10 + 10} y={index * 40 + 20} fontSize="14px">
+            <text x={continent.languageCount * (windowWidth - 50) / 100 + 10} y={index * 40 + 20} fontSize="14px">
               {continent.languageCount}
             </text>
           </g>
