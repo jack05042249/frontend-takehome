@@ -1,5 +1,8 @@
 .country-table-container {
+  max-height: 500px;
+  overflow-y: auto;
   margin-top: 1rem;
+  position: relative;
 }
 
 .table-wrapper {
@@ -15,10 +18,17 @@
 }
 
 .country-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   background-color: #f1f5f9;
   text-align: left;
   padding: 0.75rem 1rem;
   border-bottom: 2px solid #e2e8f0;
+}
+
+.country-table th:hover {
+  cursor: pointer;
 }
 
 .country-table td {
@@ -75,6 +85,27 @@
   text-align: center;
   padding: 2rem !important;
   color: #64748b;
+}
+
+/* Fixed widths for each column */
+.country-table th:nth-child(1),
+.country-table td:nth-child(1) {
+  width: 25%; /* Adjust as necessary */
+}
+
+.country-table th:nth-child(2),
+.country-table td:nth-child(2) {
+  width: 25%; /* Adjust as necessary */
+}
+
+.country-table th:nth-child(3),
+.country-table td:nth-child(3) {
+  width: 25%; /* Adjust as necessary */
+}
+
+.country-table th:nth-child(4),
+.country-table td:nth-child(4) {
+  width: 25%; /* Adjust as necessary */
 }
 
 /* Media queries for responsiveness */

@@ -1,5 +1,5 @@
-import React from 'react'
 import { Dashboard } from './components/Dashboard'
+import "./App.css";
 
 export const App = () => {
   return (

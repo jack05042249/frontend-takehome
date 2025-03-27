@@ -13,4 +13,26 @@ export interface Country {
   continent: {
     name: string
   }
+  languages: { name: string }[];
+}
+
+export interface GetCountriesData {
+  countries: Country[];
+}
+
+export enum SortKey {
+  Name = "name",
+  LanguagesCount = "languagesCount",
+  Capital = "capital",
+  Continent = "continent",
+}
+
+export interface Continent {
+  code: string;
+  name: string;
+  countries: { languages: { name: string }[] }[];
+}
+
+export interface GetContinentsData {
+  continents: Continent[];
 }
