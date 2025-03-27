@@ -33,7 +33,7 @@ interface RegionChartProps {
  */
 export const RegionChart: React.FC<RegionChartProps> = ({ onRegionClick, selectedContinent }) => {
   const { loading, error, data } = useQuery<GetContinentsData>(GET_CONTINENTS);
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth > 1200 ? 1200 : window.innerWidth);
   useEffect(() => {
     // Step 2: Define the event listener function
     const handleResize = () => {
