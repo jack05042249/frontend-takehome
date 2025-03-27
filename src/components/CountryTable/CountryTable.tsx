@@ -35,12 +35,15 @@ export const CountryTable: React.FC<CountryTableProps> = ({ filterContinent }) =
 
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: "asc" | "desc" } | null>(null);
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   const filteredCountries = useMemo(() => {
     if (!data) return [];
-    return filterContinent
-      ? data.countries.filter((country) => country.continent.name === filterContinent)
-      : data.countries;
-  }, [data, filterContinent]);
+    return data.countries.filter((country) =>
+      (!filterContinent || country.continent.name === filterContinent) &&
+      country.name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by name
+    );
+  }, [data, filterContinent, searchQuery]);
 
   const sortedCountries = useMemo(() => {
     if (!sortConfig) return filteredCountries;
@@ -79,6 +82,13 @@ export const CountryTable: React.FC<CountryTableProps> = ({ filterContinent }) =
 
   return (
     <div>
+      <input
+        type="text"
+        placeholder="Search country..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-input"
+      />
       <div>
         <small>Click column headers to sort</small>
       </div>

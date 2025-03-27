@@ -87,6 +87,14 @@
   color: #64748b;
 }
 
+.search-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 /* Fixed widths for each column */
 .country-table th:nth-child(1),
 .country-table td:nth-child(1) {
